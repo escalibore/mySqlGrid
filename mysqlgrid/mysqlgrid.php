@@ -1,7 +1,10 @@
 <?php 
     //echo str_replace('  ', '&nbsp; ', nl2br(print_r($_POST, true))); echo '</br>'. str_replace('  ', '&nbsp; ', nl2br(print_r($_GET, true)));  // For debugging.
     //echo "<h3> PHP List All Session Variables</h3>"; foreach ($_SESSION as $key=>$val) echo $key." ".$val."<br/>"; // For debugging.
-
+    
+    if($mySqlGridArray['includePath']) $mySqlGridPath = $mySqlGridArray['includePath'].'/';
+    else $mySqlGridPath = 'mysqlgrid/';
+ 
     $mySqlGridConnection = $mySqlGridArray['connection'];
     $lineCount = $mySqlGridArray['lineCount'] ? $mySqlGridArray['lineCount'] : 25;
 
@@ -154,9 +157,9 @@
         $mySqlGridSql = 'sqlGridBaseSql=' . urlencode($mySqlGridSql);
         $postString = "'mySqlGridData':'$mySqlGridSql', 'mySqlGridRows':'$get_total_rows[rowCount]'";
     ?>
-    <link rel="stylesheet" type="text/css" href="mysqlgrid/style.css" />
-    <script src="mysqlgrid/jquery-2.1.3.min.js"></script>
-    <script src="mysqlgrid/jquery.bootpag.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo "$mySqlGridPath"; ?>style.css" />
+    <script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js"></script>
+    <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
 
     <script type="text/javascript">
         function ExpandSelect(select, maxOptionsVisible) {
