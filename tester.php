@@ -6,11 +6,8 @@
         LEFT JOIN Artist a ON a.ArtistId = al.ArtistId
         LEFT JOIN Genre g ON g.GenreId = t.GenreId",
         'lineCount' => 20,
-//       'hideColumns' => array('Artist'),
-        //   'includePath' => '../thecosmicsage/mysqlgrid'
     );
     include 'mysqlgrid/mysqlgrid.php';
-    //   include '../thecosmicsage/mysqlgrid/mysqlgrid.php';
 ?>
 <body style='margin:0.5%;'><br>
     <div style='text-align:center;'><h2>Demo of <span style='color:#337AB7;'>MySqlGrid</span></h2></div>
