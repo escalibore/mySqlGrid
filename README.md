@@ -7,10 +7,10 @@ MySqlGrid generates a sortable, searchable, paginated datagrid from ANY valid My
 
 To use mySqlGrid simply follow these steps:
 1. Copy the directory "mysqlgrid" into your web directory. 
-2. Specify mysqli database connection object in "dbconnect.php" (see example provided)
-3. Include the file "mysqlgrid.php" into your script. 
-4. Specify your SQL Select statement (and other optional parameters).  
-5. In the body of your html you will need to create two div elements - one for the datagrid and one for the pagination area.  These divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.  
+2. Specify your mysqli database connection in "dbconnect.php" (see example provided)
+3. Include the file "mysqlgrid.php" in your PHP script. 
+4. Specify your SQL Select statement (and any other optional parameters).  
+5. In the body of your html you will need to create two div elements - one for the datagrid, and one for the pagination area.  These divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.  
 
 See file "tester.php" for a basic example.
 
