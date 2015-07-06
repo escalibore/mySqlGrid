@@ -1,12 +1,12 @@
-<?php 
+<?php
     include 'dbconnect.php';
-    //sanitize post value
     if($_POST['page']) $page_number = $_POST['page']; else $page_number = 1; 
     $mySqlGridParams = array();
     parse_str($_POST['mySqlGridData'],$mySqlGridParams);
     $optionsArray = unserialize(urldecode($mySqlGridParams['mySqlGridOptions']));
     $repack = urlencode(serialize($optionsArray));
     $lineCount = $optionsArray['lineCount'] ? $optionsArray['lineCount'] : 25;
+    if($optionsArray['includePath']) $mySqlGridPath = $optionsArray['includePath']; else $mySqlGridPath = 'mysqlgrid/';
     $baseSql = str_replace(PHP_EOL, '', $optionsArray['sql']);
     $position = (($page_number-1) * $lineCount);
     $mySqlGridSql = "SELECT * FROM ( ". $baseSql ." ) AS fullSet ";
@@ -22,13 +22,30 @@
                 }
             }
         } 
+        if($mySqlGridParams['mySqlGridYesPages']) {
+            $mySqlGridParams['mySqlGridNoPages'] = 0;
+        ?>
+        <script>
+            $("#mySqlGridPagination").show(); 
+        </script>
+        <?php        
+        }    
+    } else {
+        if($mySqlGridParams['mySqlGridNoPages']) {
+            $mySqlGridParams['mySqlGridNoPages'] = '';
+        ?>
+        <script>
+            $("#mySqlGridPagination").show(); 
+        </script>
+        <?php
+        }   
     }
     if($mySqlGridParams['mySqlGridSelect']) {
         $selectArray = array(); 
         $mySqlGridParams['mySqlGridSelect'] = mysqli_real_escape_string($mySqlGridConnection,$mySqlGridParams['mySqlGridSelect']); 
         $selectSql = "SELECT DISTINCT $mySqlGridParams[mySqlGridSelect] AS SelectVal FROM ( ". $mySqlGridSql ." ) AS fullSet WHERE $mySqlGridParams[mySqlGridSelect] IS NOT NULL ORDER BY $mySqlGridParams[mySqlGridSelect] ";
         $selectResults = $mySqlGridConnection->query($selectSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$selectSql");
-        while($selectRow = $selectResults->fetch_array(MYSQLI_ASSOC)) {
+        while($selectRow = $selectResults->fetch_array(MYSQLI_ASSOC)) { 
             $selectArray[] = htmlspecialchars($selectRow['SelectVal']);
         }
     } 
@@ -41,7 +58,16 @@
     } 
     $pages = ceil($totalRows/$lineCount);
     if($mySqlGridParams['sort'] && !$mySqlGridParams['mySqlGridReset']) $mySqlGridSql.=" ORDER BY $mySqlGridParams[sort] $mySqlGridParams[desc] ";
-    $mySqlGridSql .= " LIMIT $position, $lineCount ";
+
+    if(!$mySqlGridParams['mySqlGridNoPages'] && !($optionsArray['noPaginate'] == true) ) $mySqlGridSql .= " LIMIT $position, $lineCount ";
+    else {  
+    ?>
+    <script>
+        $("#mySqlGridPagination").hide();
+    </script>
+
+    <?php   
+    }
     $results = $mySqlGridConnection->query($mySqlGridSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$mySqlGridSql");
     $rowCount = $results->num_rows;
     $startRow = $position + 1;
@@ -49,12 +75,17 @@
     echo "
     <div class='mySqlGridWrapper'>
     <div class='mySqlGridTop'>
-    $totalRows Rows Found (showing: $startRow - $offSet)&nbsp;&nbsp; <img class='mySqlGridSpinner' id='mySqlGridSpinner' src='mysqlgrid/725.GIF'>
-    <div class='mySqlGridReset'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button></div>
+    $totalRows Rows Found (showing: $startRow - $offSet)&nbsp;&nbsp; <img class='mySqlGridSpinner' id='mySqlGridSpinner' src='mysqlgrid/725.GIF'>";
+    if($mySqlGridParams['mySqlGridNoPages']) 
+        echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridYesPages\").value=\"1\"; mySqlGridUpdate();'>Paginate</button></div>";
+    elseif(!($optionsArray['noPaginate'] == true) && !($optionsArray['alwaysPaginate'] == true)) echo "
+        <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridNoPages\").value=\"1\";  mySqlGridUpdate();'>No Pagination</button></div>";
+    echo "
+    <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button>&nbsp;</div>
     </div>";
     $columns = array();
-    while($finfo = $results->fetch_field()) $columns[] = $finfo->name;   
-    echo " 
+    while($finfo = $results->fetch_field()) if(!in_array($finfo->name, $optionsArray['hideColumns'])) $columns[] = $finfo->name;   
+        echo " 
     <form name='mySqlGridForm' id='mySqlGridForm' method='post' onSubmit='return false'>
     <input type='hidden' name='sort' value=\"". $mySqlGridParams['sort'] ."\">
     <input type='hidden' name='desc' value=\"". $mySqlGridParams['desc'] ."\">
@@ -63,6 +94,8 @@
     <input type='hidden' name='mySqlGridSelect' id='mySqlGridSelect' value=\"\">
     <input type='hidden' name='pageCnt' id='pageCnt' value=\"$pages\">
     <input type='hidden' name='mySqlGridReset' id='mySqlGridReset' value=\"\">
+    <input type='hidden' name='mySqlGridNoPages' id='mySqlGridNoPages' value=\"". $mySqlGridParams['mySqlGridNoPages'] ."\">
+    <input type='hidden' name='mySqlGridYesPages' id='mySqlGridYesPages' value=\"\">
     <table class='mySqlGridTable'>
     <tr>";
     foreach($columns as $column) {  // build header row
@@ -85,8 +118,11 @@
                 $val = htmlspecialchars($mySqlGridParams[$postVal]);
             }
             echo "
-            <td class='mySqlGridSearchCol'><input class='mySqlGridSearchInput' value=\"$val\" type='text' name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}' onBlur='mySqlGridUpdate();' onKeyPress='if(event.keyCode == 13) mySqlGridUpdate();'></td>
-            <td class='mySqlGridSelectCol' onClick='document.getElementById(\"mySqlGridSelect\").value=\"$column\";  mySqlGridUpdate();'><img src='mysqlgrid/icon_dropdown2.gif'></td>";
+            <td class='mySqlGridSearchCol'><input class='mySqlGridSearchInput' value=\"$val\" type='text' name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}' onBlur='mySqlGridUpdate();' onKeyPress='if(event.keyCode == 13) mySqlGridUpdate();'></td>";
+            // if($optionsArray['noSelects']) echo "its true<br>";
+            if(!in_array($column,$optionsArray['hideSelects']) && !($optionsArray['noSelects'] == true))
+                echo "<td class='mySqlGridSelectCol' onClick='document.getElementById(\"mySqlGridSelect\").value=\"$column\";  mySqlGridUpdate();'><img src='mysqlgrid/icon_dropdown2.gif'></td>";
+            else echo "<td></td>";
         }
     }
     echo "</tr>";
@@ -96,7 +132,10 @@
             if($row[$column]) $row[$column] = htmlspecialchars($row[$column]); 
             echo "<td colspan='2'>$row[$column]</td>";   
         }
-        //   echo "<td>Custom Controls</td>";
+        if($optionsArray['controlHtml']) {
+            $replacementString = str_replace('gridPrimaryKey',addslashes($row[$optionsArray['gridPrimaryKey']]),$optionsArray['controlHtml']); //Replaces primary key as specified in $mySqlGridOptions with the controlHtml.   
+            echo "<td>$replacementString</td>";
+        }
         echo "</tr>";
     }
     echo "
@@ -107,7 +146,7 @@
 ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#mySqlGridSpinner').show();
+  //      $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
         $("#mySqlGridPagination").bootpag({
             total: pageCnt

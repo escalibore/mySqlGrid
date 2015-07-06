@@ -1,11 +1,5 @@
 <?php 
-    if($mySqlGridOptions['includePath']) $mySqlGridPath = $mySqlGridOptions['includePath'].'/';
-    else $mySqlGridPath = 'mysqlgrid/';
-?>    
-<link rel="stylesheet" type="text/css" href="<?php echo "$mySqlGridPath"; ?>style.css" />
-<script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js"></script>
-<script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
-<?php
+    if($mySqlGridOptions['includePath']) $mySqlGridPath = $mySqlGridOptions['includePath']; else $mySqlGridPath = 'mysqlgrid/';
     $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
     include $mySqlGridPath.'dbconnect.php';
     $mySqlGridSql =  $mySqlGridOptions['sql'];
@@ -18,6 +12,8 @@
     $mySqlGridData = 'mySqlGridOptions='. $mySqlGridOptionsEncode;
     $postString = "'mySqlGridData':'$mySqlGridData', 'mySqlGridRows':'$get_total_rows[rowCount]', 'mySqlGridSerial':'$mySqlGridOptionsEncode'";
 ?>
+<link rel="stylesheet" type="text/css" href="<?php echo "$mySqlGridPath"; ?>style.css" />
+<script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
 <script type="text/javascript">
     function ExpandSelect(select, maxOptionsVisible) {
         //
@@ -174,7 +170,7 @@
         document.body.appendChild(select);
         select.focus();
     }
-    function mySqlGridUpdate(){
+    function mySqlGridUpdate(){  
         $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
         var formData = $('#mySqlGridForm').serialize();
@@ -191,8 +187,7 @@
         });
     }
     $(document).ready(function() {
-        $('#mySqlGridSpinner').show();
-        $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {<?php echo $postString; ?>});  //initial page number to load
+        $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {<?php echo $postString; ?>});  //initial page number to load  
         $("#mySqlGridPagination").bootpag({
             <?php echo "total: $pages,";?> // total number of pages
             page: 1, //initial page

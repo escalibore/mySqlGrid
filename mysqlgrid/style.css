@@ -1,7 +1,7 @@
 .mySqlGridSpinner {vertical-align:middle;}
 .mySqlGridWrapper {display:inline-block;}
 .mySqlGridTop {height:25px; text-align:left;}
-.mySqlGridReset {display:inline-block; float:right;}
+.mySqlGridbuttonArea {display:inline-block; float:right;}
 .mySqlGridHeader {cursor:pointer;}
 .mySqlGridSearchCol {white-space:nowrap;}
 .mySqlGridSearchInput {width:100%;}
