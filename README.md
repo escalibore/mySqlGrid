@@ -14,7 +14,7 @@ To use mySqlGrid follow these steps:<br>
 4. Specify your SQL Select statement (and any other optional parameters) in the "$mySqlGridOptions" array.  
 5. In the body of your html you will need to create two div elements - one for the datagrid, and one for the pagination area.  These two divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.<br>  
 
-To see a basic example, see file "basicgrid.php".
+To see a basic example, see <a href="https://github.com/escalibore/mySqlGrid/blob/master/basicgrid.php">basicgrid.php</a>.
 
 <h4>MySqlGrid Options are specified in the header of your html, in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
 <table>
