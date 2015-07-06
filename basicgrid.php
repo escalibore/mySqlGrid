@@ -22,11 +22,8 @@
         ?> 
     </head>
     <body style='margin:0.5%;'><br>
-        <div style='text-align:center;'><h2>Demo of <span style='color:#337AB7;'>MySqlGrid</span></h2></div>
         <div id="mySqlGridTable" style='text-align: center;'></div>
         <div id="mySqlGridPagination" style='text-align: center;'></div>
-        <div style="text-align: center;"><a href="https://github.com/escalibore/mySqlGrid">Download MySqlGrid from GitHub</a></div>
-        <div id="dialog" title="mySqlGrid Control Dialog"></div>
     </body>
 </html>
 
