@@ -19,7 +19,7 @@ For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/ma
 <h4>MySqlGrid Options are specified in the header of your html, in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
 <table>
 <tr><th>Option Name</th><th>Type</th><th>Description</th></tr>
-<tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required.</td></tr>
+<tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required to generate a grid.</td></tr>
 <tr><td><b>includePath</b></td><td>String</td><td>This is the path to the "mysqlgrid" directory. If you do not specify an <b>includePath</b> mySqlGrid assumes the same directory as your php script.  <b>includePath</b> needs to have a "/" as the last character.  It is recommended to use relative paths.  Example: "../somedirectory/anotherdirectory/"</td></tr>
 <tr><td><b>lineCount</b></td><td>Integer</td><td>The number of rows in each paginated grid.  If <b>lineCount</b> is not specified mySqlGrid will display 25 rows per page.</td></tr>
 <tr><td><b>hideColumns</b></td><td>Array</td><td>Specifies columns in the mySQL result set that will not be displayed on the grid.  This is handy when you want to get a table's primary key value that means nothing to the user, but will be used to perform an action on a selected row. (See options <b>gridControlHtml</b> and <b>gridControlKey</b>)</td></tr>
