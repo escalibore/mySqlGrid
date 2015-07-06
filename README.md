@@ -9,7 +9,7 @@ I created mySqlGrid with a focus on security and simplicity.  The learning curve
 
 To use mySqlGrid follow these steps:<br>
 1. Copy directory "mysqlgrid" to a directory on your web server.<br> 
-2. Specify your mysqli database connection in "dbconnect.php" (see example provided)<br>
+2. Specify your mysqli database connection in <a href="https://github.com/escalibore/mySqlGrid/blob/master/mysqlgrid/dbconnect.php">dbconnect.php</a><br>
 3. Include the file "mysqlgrid.php" in your PHP script.<br> 
 4. Specify your SQL Select statement (and any other optional parameters) in the "$mySqlGridOptions" array.  
 5. In the body of your html you will need to create two div elements - one for the datagrid, and one for the pagination area.  These two divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.<br>  
