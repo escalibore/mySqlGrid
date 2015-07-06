@@ -132,8 +132,8 @@
             if($row[$column]) $row[$column] = htmlspecialchars($row[$column]); 
             echo "<td colspan='2'>$row[$column]</td>";   
         }
-        if($optionsArray['controlHtml']) {
-            $replacementString = str_replace('gridPrimaryKey',addslashes($row[$optionsArray['gridPrimaryKey']]),$optionsArray['controlHtml']); //Replaces primary key as specified in $mySqlGridOptions with the controlHtml.   
+        if($optionsArray['gridControlHtml']) {
+            $replacementString = str_replace('gridControlKey',addslashes($row[$optionsArray['gridControlKey']]),$optionsArray['gridControlHtml']); //Replaces primary key as specified in $mySqlGridOptions with the gridControlHtml.   
             echo "<td>$replacementString</td>";
         }
         echo "</tr>";
