@@ -17,7 +17,6 @@
                 //'alwaysPaginate' => true,
                 //'gridControlKey' => 'Track',
                 //'gridControlHtml' => "<img onClick=\"view('gridControlKey');\" src='mysqlgrid/view.png'><img onClick=\"edit('gridControlKey');\" src='mysqlgrid/update.png'><img onClick=\"kill('gridControlKey');\" src='mysqlgrid/delete.png'>",
-                //'includePath' => '../tcs/mysqlgrid'
             );
             include ($mySqlGridOptions['includePath'] ? $mySqlGridOptions['includePath'] : 'mysqlgrid/') ."mysqlgrid.php";
         ?> 
