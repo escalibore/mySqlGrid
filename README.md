@@ -16,10 +16,10 @@ To use mySqlGrid follow these steps:<br>
 
 To see a basic example, see file "basicgrid.php".
 
-<h3>MySqlGrid Options are specified in the header of your html, in a PHP array called "$mySqlGridOptions".  The options are as follows:</h3>
+<h4>MySqlGrid Options are specified in the header of your html, in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
 <table>
 <tr><th>Option Name</th><th>Type</th><th>Description</th></tr>
-<tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that must be included.</td></tr>
+<tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required.</td></tr>
 <tr><td><b>includePath</b></td><td>String</td><td>This is the path to the "mysqlgrid" directory. If you do not specify an <b>includePath</b> mySqlGrid assumes the same directory as your php script.  <b>includePath</b> needs to have a "/" as the last character.  It is recommended to use relative paths.  Example: "../somedirectory/anotherdirectory/"</td></tr>
 <tr><td><b>lineCount</b></td><td>Integer</td><td>The number of rows in each pagingated grid.  If <b>lineCount</b> is not specified mySqlGrid will display 25 rows per page.</td></tr>
 <tr><td><b>hideColumns</b></td><td>Array</td><td>Specifies columns in the mySQL result set that will not be displayed on the grid.  This is handy when you want to get a table's primary key value that means nothing to the user, but will be used to perform an action on a selected row. (See options <b>gridControlHtml</b> and <b>gridControlKey</b>)</td></tr>
@@ -41,6 +41,10 @@ To see a basic example, see file "basicgrid.php".
 </table>
 </td></tr>
 </table>
+<h4>Other Notes:</h4>
+MySqlGrid checks to see if jQuery is present, and if not, automatically loads it from a local copy stored in directory "mysqlgrid". If you otherwise need to load jQuery in your script it is recommended to add it in the head section above the $mySqlOptions array.
+<h4>Acknowledgments</h4>
+A huge thank you goes out to Czarek Tomczak for <a href="https://code.google.com/p/expandselect/">ExpandSelect.js</a> and to botmonster for <a href="http://botmonster.com/jquery-bootpag/#.VZqNtvlViko">bootpag</a>.  You guys are javaScript geniuses and mySqlGrid would not have been possible without your generous open source contributions.
 
 
 
