@@ -1,7 +1,7 @@
 # mySqlGrid
 A powerful yet easy to use Ajax datagrid for PHP/MySQL
 
-Demo: http://tberthold.com/mySqlGrid/tester.php
+Demo: http://mysqlgrid.com/demo/demo1.php
 
 MySqlGrid lets you easily create a sortable, searchable, and paginated data grid from ANY valid MySQL SELECT statement.  Each column will automatically have an input field where the user can enter a substring to filter the results.  If the user selects the drop-down icon for a column MySqlGrid dynamically builds an html select element from the unique values for that column.
 
