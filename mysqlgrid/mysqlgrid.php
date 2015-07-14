@@ -1,7 +1,7 @@
 <?php 
     if($mySqlGridOptions['includePath']) $mySqlGridPath = $mySqlGridOptions['includePath']; else $mySqlGridPath = 'mysqlgrid/';
     $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
-    include $mySqlGridPath.'dbconnect.php';
+    require $mySqlGridPath.'dbconnect.php';
     $mySqlGridSql =  $mySqlGridOptions['sql'];
     $mySqlGridSql = str_replace(PHP_EOL, '', $mySqlGridSql); // get rid of eol characters
     $countSql = "SELECT COUNT(*) rowCount FROM ( ". $mySqlGridSql ." ) AS fullSet ";     
@@ -36,7 +36,6 @@
         });
     }
     $(document).ready(function() {
-
         if(!jQuery.ui) { // Only load jquery-ui if not already loaded.
             var script = document.createElement( 'script' );
             script.type = 'text/javascript';
