@@ -12,9 +12,12 @@
     $mySqlGridData = 'mySqlGridOptions='. $mySqlGridOptionsEncode;
     $postString = "'mySqlGridData':'$mySqlGridData', 'mySqlGridRows':'$get_total_rows[rowCount]', 'mySqlGridSerial':'$mySqlGridOptionsEncode'";
 ?>
+<link rel="stylesheet" href="<?php echo "$mySqlGridPath"; ?>theme.css">
+<link rel="stylesheet" href="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo "$mySqlGridPath"; ?>style.css" />
-<script>window.jQuery || document.write('<script src="mysqlgrid/jquery-2.1.3.min.js">\x3C/script>')</script>
+<script>window.jQuery || document.write('<script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js">\x3C/script>')</script>
 <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
+
 <script type="text/javascript">
     function mySqlGridUpdate(){  
         $('#mySqlGridSpinner').show();
@@ -33,6 +36,13 @@
         });
     }
     $(document).ready(function() {
+
+        if(!jQuery.ui) { // Only load jquery-ui if not already loaded.
+            var script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = "<?php echo "$mySqlGridPath"; ?>jquery-ui.min.js";
+            document.head.appendChild( script );
+        }
         $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {<?php echo $postString; ?>});  //initial page number to load  
         $("#mySqlGridPagination").bootpag({
             <?php echo "total: $pages,";?> // total number of pages
@@ -44,7 +54,7 @@
             $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {'page':num, <?php echo $postString; ?> });
         });
     });
-       function ExpandSelect(select, maxOptionsVisible) {
+    function ExpandSelect(select, maxOptionsVisible) {
         //
         // ExpandSelect 1.00
         // Copyright (c) Czarek Tomczak. All rights reserved.
