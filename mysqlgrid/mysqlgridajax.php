@@ -90,9 +90,9 @@
     <div class='mySqlGridWrapper'>
     <div class='mySqlGridTop'>
     $totalRows Rows Found (showing: $startRow - $offSet)&nbsp;&nbsp; <img class='mySqlGridSpinner' id='mySqlGridSpinner' src='{$mySqlGridPath}images/725.GIF'>";
-    if($mySqlGridParams['mySqlGridNoPages']) 
+    if($mySqlGridParams['mySqlGridNoPages'] && $pages > 1) 
         echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridYesPages\").value=\"1\"; mySqlGridUpdate();'>Paginate</button></div>";
-    elseif(!($optionsArray['noPaginate'] == true) && !($optionsArray['alwaysPaginate'] == true)) echo "
+    elseif($pages > 1 && !($optionsArray['noPaginate'] == true) && !($optionsArray['alwaysPaginate'] == true)) echo "
         <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridNoPages\").value=\"1\";  mySqlGridUpdate();'>No Pagination</button></div>";
     echo "
     <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button>&nbsp;</div>
@@ -173,7 +173,7 @@
             <p>$column >= <input type='text' name='mySqlGridDateFilterGe{$column}' id='mySqlGridDateFilterGe{$column}' value=\"$geVal\" ></p>
             <p>$column <= <input type='text' name='mySqlGridDateFilterLe{$column}' id='mySqlGridDateFilterLe{$column}' value=\"$leVal\" ></p>
             <p>
-            <input type='button' name='mySqlGridDateFilterButton' value='Filter' onclick='document.getElementById(\"mySqlGridFilter{$column}\").value=\"\"; mySqlGridUpdate();'>
+            <input type='button' name='mySqlGridDateFilterButton' value='Apply' onclick='document.getElementById(\"mySqlGridFilter{$column}\").value=\"\"; mySqlGridUpdate();'>
             <input type='button' name='mySqlGridDateFilterButton' value='Clear' onclick='document.getElementById(\"mySqlGridDateFilterGe{$column}\").value=\"\"; document.getElementById(\"mySqlGridDateFilterLe{$column}\").value=\"\"; document.getElementById(\"mySqlGridFilter{$column}\").value=\"\"; mySqlGridUpdate();'></p>
             </div>";   
         ?>  
@@ -210,9 +210,13 @@
     $(document).ready(function() {
         //      $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
-        $("#mySqlGridPagination").bootpag({
-            total: pageCnt
-        })
+        if(pageCnt < 2) $("#mySqlGridPagination").hide();
+        else {
+            $("#mySqlGridPagination").show();
+            $("#mySqlGridPagination").bootpag({
+                total: pageCnt
+            })
+        }
         $('#mySqlGridSpinner').hide();
         <?php
             if($selectId) echo "ExpandSelect(\"$selectId\");";
