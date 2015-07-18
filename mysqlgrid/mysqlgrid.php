@@ -8,7 +8,7 @@
     $results = $mySqlGridConnection->query($countSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$countSql");
     $get_total_rows = $results->fetch_array(MYSQLI_ASSOC);
     $pages = ceil($get_total_rows['rowCount']/$lineCount);
-    $mySqlGridOptionsEncode = urlencode(serialize($mySqlGridOptions));
+    $mySqlGridOptionsEncode = urlencode(serialize($mySqlGridOptions));                                                       
     $mySqlGridData = 'mySqlGridOptions='. $mySqlGridOptionsEncode;
     $postString = "'mySqlGridData':'$mySqlGridData', 'mySqlGridRows':'$get_total_rows[rowCount]', 'mySqlGridSerial':'$mySqlGridOptionsEncode'";
 ?>
@@ -18,7 +18,7 @@
 <script>window.jQuery || document.write('<script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js">\x3C/script>')</script>
 <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
     function mySqlGridUpdate(){  
         $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
@@ -36,6 +36,7 @@
         });
     }
     $(document).ready(function() {
+        $("#mySqlGridPagination").css("display", "none"); // prevents pagination bar from appearing before table.
         if(!jQuery.ui) { // Only load jquery-ui if not already loaded.
             var script = document.createElement( 'script' );
             script.type = 'text/javascript';

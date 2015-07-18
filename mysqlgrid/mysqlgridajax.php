@@ -1,9 +1,9 @@
 <?php
-    if(!$mySqlGridConnection) require 'dbconnect.php';
     if($_POST['page']) $page_number = $_POST['page']; else $page_number = 1; 
     $mySqlGridParams = array();
     parse_str($_POST['mySqlGridData'],$mySqlGridParams);
     $optionsArray = unserialize(urldecode($mySqlGridParams['mySqlGridOptions']));
+    if(!$mySqlGridConnection) require 'dbconnect.php';
     $repack = urlencode(serialize($optionsArray));
     $lineCount = $optionsArray['lineCount'] ? $optionsArray['lineCount'] : 25;
     if($optionsArray['includePath']) $mySqlGridPath = $optionsArray['includePath']; else $mySqlGridPath = 'mysqlgrid/';
@@ -94,9 +94,8 @@
         echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridYesPages\").value=\"1\"; mySqlGridUpdate();'>Paginate</button></div>";
     elseif($pages > 1 && !($optionsArray['noPaginate'] == true) && !($optionsArray['alwaysPaginate'] == true)) echo "
         <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridNoPages\").value=\"1\";  mySqlGridUpdate();'>No Pagination</button></div>";
-    echo "
-    <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button>&nbsp;</div>
-    </div>";
+    if(!$optionsArray['noReset']) echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button>&nbsp;</div>";
+    echo "</div>";
     $columns = array();
     while($finfo = $results->fetch_field()) if(!in_array($finfo->name, $optionsArray['hideColumns'])) $columns[$finfo->name] = $finfo->type;   
         echo " 
@@ -116,32 +115,34 @@
         echo "<th colspan='2' class='mySqlGridHeader' onclick=\"document.mySqlGridForm.sort.value='$column'; document.mySqlGridForm.desc.value='" . (($mySqlGridParams['sort'] == $column && !$mySqlGridParams['desc']) ? "desc" : "") . "'; mySqlGridUpdate(); return false;\">$column</th>";
     }
     echo "</tr>";
-    echo "<tr>"; 
-    foreach($columns as $column => $type) { // build search row
-        $column = htmlspecialchars($column);
-        if($mySqlGridParams['mySqlGridSelect'] == $column) { // User requested a drop down list
-            $selectId = "mySqlGridFilter{$column}";
-            echo "<td colspan='2' onChange='mySqlGridUpdate();'><select name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}'><option value=''></option>";  
-            foreach($selectArray as $optionVal) {
-                echo "<option value=\"$optionVal\">$optionVal</option>";
-            }
-            echo "</select></td>";
-        } else {
-            if(!$mySqlGridParams['mySqlGridReset']) {
-                if($mySqlGridParams["mySqlGridDateFilterGe{$column}"] || $mySqlGridParams["mySqlGridDateFilterLe{$column}"]) $val = '(Filtered)';
-                else {
-                    $postVal = "mySqlGridFilter$column";
-                    $val = htmlspecialchars($mySqlGridParams[$postVal]);
+    echo "<tr>";
+    if(!$optionsArray['noSearch'] == true) { 
+        foreach($columns as $column => $type) { // build search row
+            $column = htmlspecialchars($column);
+            if($mySqlGridParams['mySqlGridSelect'] == $column) { // User requested a drop down list
+                $selectId = "mySqlGridFilter{$column}";
+                echo "<td colspan='2' onChange='mySqlGridUpdate();'><select name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}'><option value=''></option>";  
+                foreach($selectArray as $optionVal) {
+                    echo "<option value=\"$optionVal\">$optionVal</option>";
                 }
+                echo "</select></td>";
+            } else {
+                if(!$mySqlGridParams['mySqlGridReset']) {
+                    if($mySqlGridParams["mySqlGridDateFilterGe{$column}"] || $mySqlGridParams["mySqlGridDateFilterLe{$column}"]) $val = '(Filtered)';
+                    else {
+                        $postVal = "mySqlGridFilter$column";
+                        $val = htmlspecialchars($mySqlGridParams[$postVal]);
+                    }
+                }
+                echo "
+                <td class='mySqlGridSearchCol'><input class='mySqlGridSearchInput' value=\"$val\" type='text' name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}' onBlur='mySqlGridUpdate();' onKeyPress='if(event.keyCode == 13) mySqlGridUpdate();'></td>";
+                if($type == 12 || $type == 10) {
+                    echo "<td class='mySqlGridSelectCol' onClick=\"mySqlGridDate$column();\"><img src='{$mySqlGridPath}images/calendar3.gif'></td>";
+                }
+                elseif(!in_array($column,$optionsArray['hideSelects']) && !($optionsArray['noSelects'] == true))
+                    echo "<td class='mySqlGridSelectCol' onClick='document.getElementById(\"mySqlGridSelect\").value=\"$column\";  mySqlGridUpdate();'><img src='{$mySqlGridPath}images/icon_dropdown2.gif'></td>";
+                else echo "<td></td>";
             }
-            echo "
-            <td class='mySqlGridSearchCol'><input class='mySqlGridSearchInput' value=\"$val\" type='text' name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}' onBlur='mySqlGridUpdate();' onKeyPress='if(event.keyCode == 13) mySqlGridUpdate();'></td>";
-            if($type == 12 || $type == 10) {
-                echo "<td class='mySqlGridSelectCol' onClick=\"mySqlGridDate$column();\"><img src='{$mySqlGridPath}images/calendar3.gif'></td>";
-            }
-            elseif(!in_array($column,$optionsArray['hideSelects']) && !($optionsArray['noSelects'] == true))
-                echo "<td class='mySqlGridSelectCol' onClick='document.getElementById(\"mySqlGridSelect\").value=\"$column\";  mySqlGridUpdate();'><img src='{$mySqlGridPath}images/icon_dropdown2.gif'></td>";
-            else echo "<td></td>";
         }
     }
     echo "</tr>";
@@ -210,7 +211,7 @@
     $(document).ready(function() {
         //      $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
-        if(pageCnt < 2) $("#mySqlGridPagination").hide();
+        if(pageCnt < 2 <?php if($optionsArray['noPaginate'] || $mySqlGridParams['mySqlGridNoPages']) echo ' || true '; ?>) $("#mySqlGridPagination").hide();
         else {
             $("#mySqlGridPagination").show();
             $("#mySqlGridPagination").bootpag({
