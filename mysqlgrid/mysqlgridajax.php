@@ -162,7 +162,7 @@
     </table>
     <input type='submit' class='mySqlGridSubmit'>";
     foreach($columns as $column => $type) {
-        if($type == 12 || $type == 10) {
+        if(($type == 12 || $type == 10) && !$optionsArray['noSearch']) {
             if(!$mySqlGridParams['mySqlGridReset']) {
                 $postVal = "mySqlGridDateFilterGe$column";
                 $geVal = htmlspecialchars($mySqlGridParams[$postVal]);
