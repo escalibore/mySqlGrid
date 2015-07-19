@@ -162,7 +162,7 @@
     </table>
     <input type='submit' class='mySqlGridSubmit'>";
     foreach($columns as $column => $type) {
-        if($type == 12) {
+        if($type == 12 || $type == 10) {
             if(!$mySqlGridParams['mySqlGridReset']) {
                 $postVal = "mySqlGridDateFilterGe$column";
                 $geVal = htmlspecialchars($mySqlGridParams[$postVal]);
@@ -182,7 +182,7 @@
             <?php echo "function mySqlGridDate$column() "; ?> {
                 $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog( "open" );
             }  
-            $(function() {
+            $(function() { 
                 $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog({
                     autoOpen: false,
                     minWidth: 600,
@@ -209,7 +209,6 @@
 ?> 
 <script type="text/javascript">
     $(document).ready(function() {
-        //      $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
         if(pageCnt < 2 <?php if($optionsArray['noPaginate'] || $mySqlGridParams['mySqlGridNoPages']) echo ' || true '; ?>) $("#mySqlGridPagination").hide();
         else {

@@ -19,7 +19,13 @@
 <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
 
 <script type="text/javascript"> 
-    function mySqlGridUpdate(){  
+    function mySqlGridUpdate(){
+            if(!jQuery.ui) { // Only load jquery-ui if not already loaded.
+            var script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = "<?php echo "$mySqlGridPath"; ?>jquery-ui.min.js";
+            document.head.appendChild( script );
+        }
         $('#mySqlGridSpinner').show();
         var pageCnt = document.getElementById('pageCnt').value;
         var formData = $('#mySqlGridForm').serialize();
