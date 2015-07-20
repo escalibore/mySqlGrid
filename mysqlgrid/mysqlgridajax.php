@@ -182,7 +182,7 @@
             <?php echo "function mySqlGridDate$column() "; ?> {
                 $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog( "open" );
             }  
-            $(function() { 
+            $(function() {
                 $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog({
                     autoOpen: false,
                     minWidth: 600,
