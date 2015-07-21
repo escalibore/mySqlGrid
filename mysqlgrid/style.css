@@ -2,13 +2,17 @@
 .mySqlGridWrapper {display:inline-block;}
 .mySqlGridTop {height:25px; text-align:left;}
 .mySqlGridbuttonArea {display:inline-block; float:right;}
-.mySqlGridHeader {cursor:pointer;}
+.mySqlGridHeader {cursor:pointer; white-space:nowrap;}
 .mySqlGridSearchCol {white-space:nowrap;}
 .mySqlGridSearchInput {width:100%;}
 .mySqlGridSelectCol {width:6px; border-left:none; cursor:pointer;}
 .mySqlGridSubmit {position: absolute; left: -9999px}
 
+.mySqlGridSortIcon {display: inline-block;}
+.mySqlGridIconNorth {position:absolute; top:-1px;}
+.mySqlGridIconSouth {height:10px;}
 .mySqlGridTable {
+    position: relative;
     margin: auto;
     border-collapse: collapse;
     font-family: arial;
@@ -26,15 +30,13 @@
     border-left: 1px solid #ccc;
 } 
 .mySqlGridTable th {
-    /* font-size: 0.85em; */
+    padding: 3px;
     text-align: center;
     text-transform: uppercase;
     border-top: 1px solid #666;
-    /*  padding: 0.3em;  */
-    vertical-align: 4px;
+  /*  vertical-align: 4px;  */
     background-color: #337AB7; 
     color: white;
-    /* border-left: 1px solid #ccc; */
 }
 
 .mySqlGridTable th a, .mySqlGridTable th a:visited {
