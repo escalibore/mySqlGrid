@@ -64,6 +64,8 @@
     }
     if(!$mySqlGridParams['mySqlGridSort']) {
         if(preg_match("/order by (\S+)/i", $baseSql, $match )) $mySqlGridParams['mySqlGridSort'] = $match[1];
+        if(preg_match("/\border by\W+(?:\w+\W+){1,6}?desc\b/i", $baseSql, $match )) $mySqlGridParams['mySqlGridDesc'] = 'desc';
+        
     }
     if($mySqlGridParams['mySqlGridSelect']) {
         $selectArray = array(); 
