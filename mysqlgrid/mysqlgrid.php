@@ -22,12 +22,12 @@
 <script type="text/javascript"> 
     function mySqlGridUpdate(){
         $('#mySqlGridSpinner').show();
-        var pageCnt = document.getElementById('pageCnt').value;
+        var mySqlGridPageCnt = document.getElementById('mySqlGridPageCnt').value;
         var formData = $('#mySqlGridForm').serialize();
         $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {'mySqlGridData':formData});
         $('#mySqlGridPagination').unbind('page')  
         $("#mySqlGridPagination").bootpag({
-            total: pageCnt, // total number of pages
+            total: mySqlGridPageCnt, // total number of pages
             page: 1, //initial page
             maxVisible: 10 //maximum visible links
         }).on("page", function(e, num){
