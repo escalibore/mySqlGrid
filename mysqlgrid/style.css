@@ -1,8 +1,32 @@
+a.tooltip {outline:none; }
+a.tooltip strong {line-height:30px;}
+a.tooltip:hover {text-decoration:none; font-family: arial;} 
+a.tooltip span {
+    z-index:10;display:none; padding:14px 20px;
+    margin-top:30px; margin-left:-460px;
+    width:420px; line-height:16px;
+}
+a.tooltip:hover span{ 
+    display:inline; position:absolute; 
+    border:2px solid #FFF;  color:#EEE;
+    background:#337AB7 repeat-x 0 0;
+ /*   background:#337AB7 url(images/css-tooltip-gradient-bg.png) repeat-x 0 0;  */
+}
+.callout {z-index:20;position:absolute;border:0;top:-14px;left:120px;}
+    
+/*CSS3 extras*/
+a.tooltip span
+{
+    border-radius:2px;        
+    box-shadow: 0px 0px 8px 4px #666;
+    /*opacity: 0.8;*/
+}
+
 .mySqlGridSpinner {vertical-align:middle;}
 .mySqlGridWrapper {display:inline-block;}
 .mySqlGridTop {height:25px; text-align:left;}
 .mySqlGridbuttonArea {display:inline-block; float:right;}
-.mySqlGridHeader {cursor:pointer; white-space:nowrap;}
+.mySqlGridHeader {cursor:pointer; /*white-space:nowrap; */}
 .mySqlGridSearchCol {white-space:nowrap;}
 .mySqlGridSearchInput {width:100%;}
 .mySqlGridSelectCol {width:6px; border-left:none; cursor:pointer;}

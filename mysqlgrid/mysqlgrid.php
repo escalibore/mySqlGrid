@@ -49,6 +49,23 @@
             $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {'page':num, <?php echo $postString; ?> });
         });
     });
+    function printableView() {
+        var elem = document.getElementById("mySqlGridTop");
+        elem.parentNode.removeChild(elem);
+        var elem = document.getElementById("mySqlGridSearchRow");
+        elem.parentNode.removeChild(elem);
+
+        var inputs = document.getElementsByTagName("INPUT");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].style.display = "none";
+        }
+        
+        var inputs = document.getElementsByTagName("IMG");
+        for (var i = 0; i < inputs.length; i++) {
+            inputs[i].style.display = "none";
+        }
+        $("#mySqlGridPagination").hide();
+    }
     function ExpandSelect(select, maxOptionsVisible) {
         //
         // ExpandSelect 1.00

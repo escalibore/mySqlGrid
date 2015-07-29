@@ -18,10 +18,22 @@
                 if($columnNameArray[1]) {
                     $columnNameArray[1] = mysqli_real_escape_string($mySqlGridConnection,$columnNameArray[1]);
                     $columnNameArray[1] = str_replace('~',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore 
-                    $val = mysqli_real_escape_string($mySqlGridConnection,$val);
-                    if(strstr($val,'=')){ // if preceded by equal sign we don't do a "LIKE" but hard equality.
-                        $stripEqualArray = explode('=',$val);
-                        $mySqlGridSql .= " AND `$columnNameArray[1]` = '$stripEqualArray[1]' ";
+                    $val = trim(mysqli_real_escape_string($mySqlGridConnection,$val));
+                    if(strpos($val,'=') === 0){ // if preceded by =, >, or < sign we don't do a "LIKE".
+                        $stripArray = explode('=',$val);
+                        $mySqlGridSql .= " AND `$columnNameArray[1]` = '$stripArray[1]' ";
+                    } elseif(strpos($val,'>=') === 0){ 
+                        $stripArray = explode('>=',$val);
+                        $mySqlGridSql .= " AND `$columnNameArray[1]` >= '$stripArray[1]' ";
+                    } elseif(strpos($val,'<=') === 0){ 
+                        $stripArray = explode('<=',$val);
+                        $mySqlGridSql .= " AND `$columnNameArray[1]` <= '$stripArray[1]' ";
+                    } elseif(strpos($val,'>') === 0){ 
+                        $stripArray = explode('>',$val);
+                        $mySqlGridSql .= " AND `$columnNameArray[1]` > '$stripArray[1]' ";
+                    } elseif(strpos($val,'<') === 0){ 
+                        $stripArray = explode('<',$val);
+                        $mySqlGridSql .= " AND `$columnNameArray[1]` < '$stripArray[1]' ";
                     }
                     else $mySqlGridSql .= " AND `$columnNameArray[1]` LIKE '%$val%' ";
                 }
@@ -102,14 +114,31 @@
     $offSet = $position + $rowCount;
     echo "
     <div class='mySqlGridWrapper'>
-    <div class='mySqlGridTop'>
+    <div class='mySqlGridTop' id='mySqlGridTop'>
     $totalRows Rows Found";
     if($totalRows > 2) echo " (showing: $startRow - $offSet)";
     echo "&nbsp;&nbsp; <img class='mySqlGridSpinner' id='mySqlGridSpinner' src='{$mySqlGridPath}images/725.GIF'>";
+    if($optionsArray['noToolTip'] != true) {
+    ?>
+    <div class='mySqlGridbuttonArea' style="position: relative; top:3px; margin-left: 14px;">
+        <a href="#" class="tooltip">
+            <img src="<?php echo "$mySqlGridPath"; ?>images/questionmark2.png" />
+            <span>
+                Click a column header to change the sort order.<br>Type a value into an input area to perform a "LIKE" search.<br>Preceding an input value with "=" performs an exact match.<br>You can also precede an input value with &gt;, &lt;, &gt;=, or &lt;=.    
+            </span>
+        </a>
+    </div>
+    <?php
+    }
+    if($optionsArray['noReport'] != true) {
+    ?>
+    <div class='mySqlGridbuttonArea'><button onclick="printableView()">Report View</button></div>
+    <?php
+    }
     if($mySqlGridParams['mySqlGridNoPages'] && $pages > 1) 
-        echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridYesPages\").value=\"1\"; mySqlGridUpdate();'>Paginate</button></div>";
+        echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridYesPages\").value=\"1\"; mySqlGridUpdate();'>Paginate</button>&nbsp</div>";
     elseif($pages > 1 && !($optionsArray['noPaginate'] == true) && !($optionsArray['alwaysPaginate'] == true)) echo "
-        <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridNoPages\").value=\"1\";  mySqlGridUpdate();'>No Pagination</button></div>";
+        <div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridNoPages\").value=\"1\";  mySqlGridUpdate();'>No Pagination</button>&nbsp</div>";
     if(!$optionsArray['noReset']) echo "<div class='mySqlGridbuttonArea'><button onClick='document.getElementById(\"mySqlGridReset\").value=\"1\";  mySqlGridUpdate();'>Reset</button>&nbsp;</div>";
     echo "</div>";
     $columns = array();
@@ -137,7 +166,7 @@
             else echo "</th>";
         }     
         echo "</tr>";
-        echo "<tr>";
+        echo "<tr id='mySqlGridSearchRow'>";
         if(!$optionsArray['noSearch'] == true) { 
             foreach($columns as $column => $type) { // build search row
                 $column = str_replace(' ','~',htmlspecialchars($column)); // have to convert blanks to '~' because parse_str changes blanks to underscores.  We convert back in code above.
