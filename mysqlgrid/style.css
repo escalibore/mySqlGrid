@@ -26,15 +26,15 @@ a.tooltip span
 .mySqlGridWrapper {display:inline-block;}
 .mySqlGridTop {height:25px; text-align:left;}
 .mySqlGridbuttonArea {display:inline-block; float:right;}
-.mySqlGridHeader {cursor:pointer; /*white-space:nowrap; */}
+.mySqlGridHeader {cursor:pointer; /*white-space:nowrap;*/ }
 .mySqlGridSearchCol {white-space:nowrap;}
 .mySqlGridSearchInput {width:100%;}
 .mySqlGridSelectCol {width:6px; border-left:none; cursor:pointer;}
 .mySqlGridSubmit {position: absolute; left: -9999px}
 
-.mySqlGridSortIcon {display: inline-block;}
-.mySqlGridIconNorth {position:absolute; top:-1px;}
-.mySqlGridIconSouth {height:10px;}
+.mySqlGridSortIcon {display: inline-block; position: relative; height:12px; width:14px}
+.mySqlGridIconNorth {position:absolute; top:-5px;}
+.mySqlGridIconSouth {position: absolute; top: 1px;}
 .mySqlGridTable {
     position: relative;
     margin: auto;

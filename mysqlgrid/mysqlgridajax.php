@@ -160,10 +160,17 @@
         <table class='mySqlGridTable'>
         <tr>";
         foreach($columns as $column => $type) {  // build header row
-            echo "<th colspan='2' class='mySqlGridHeader' onclick=\"document.mySqlGridForm.mySqlGridSort.value='$column'; document.mySqlGridForm.mySqlGridDesc.value='" . (($mySqlGridParams['mySqlGridSort'] == $column && !$mySqlGridParams['mySqlGridDesc']) ? "desc" : "") . "'; mySqlGridUpdate(); return false;\">$column";
-            if($column == $mySqlGridParams['mySqlGridSort'] && $mySqlGridParams['mySqlGridDesc']) echo "<div class='mySqlGridSortIcon'><span class='mySqlGridIconNorth ui-icon ui-icon-triangle-1-n ui-state-disabled'></span><span class='mySqlGridIconSouth ui-icon ui-icon-triangle-1-s'></span></div></th>";
-            elseif($column == $mySqlGridParams['mySqlGridSort'] && !$mySqlGridParams['mySqlGridDesc']) echo "<div class='mySqlGridSortIcon'><span class='mySqlGridIconNorth ui-icon ui-icon-triangle-1-n '></span><span class='mySqlGridIconSouth ui-icon ui-icon-triangle-1-s ui-state-disabled'></span></div></th>";
-            else echo "</th>";
+            echo "<th colspan='2' class='mySqlGridHeader' onclick=\"document.mySqlGridForm.mySqlGridSort.value='$column'; document.mySqlGridForm.mySqlGridDesc.value='" . (($mySqlGridParams['mySqlGridSort'] == $column && !$mySqlGridParams['mySqlGridDesc']) ? "desc" : "") . "'; mySqlGridUpdate(); return false;\">";
+            if($column == $mySqlGridParams['mySqlGridSort']) { //special styling for sort icons 
+                echo" 
+                <div style='display:table; margin:auto;'>
+                <div style='display:table-cell; vertical-align:middle;'>$column</div>
+                <div style='display:table-cell; vertical-align:middle;'>";
+                if($mySqlGridParams['mySqlGridDesc']) echo "<div class='mySqlGridSortIcon'><span class='mySqlGridIconNorth ui-icon ui-icon-triangle-1-n ui-state-disabled'></span><span class='mySqlGridIconSouth ui-icon ui-icon-triangle-1-s'></span></div>";
+                else echo "<div class='mySqlGridSortIcon'><span class='mySqlGridIconNorth ui-icon ui-icon-triangle-1-n '></span><span class='mySqlGridIconSouth ui-icon ui-icon-triangle-1-s ui-state-disabled'></span></div>";
+                echo "</div></div>";
+            } else echo "$column";
+            echo "</th>";
         }     
         echo "</tr>";
         echo "<tr id='mySqlGridSearchRow'>";
