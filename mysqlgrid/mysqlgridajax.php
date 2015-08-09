@@ -17,7 +17,7 @@
                 $columnNameArray = explode('mySqlGridFilter',$key);
                 if($columnNameArray[1]) {
                     $columnNameArray[1] = mysqli_real_escape_string($mySqlGridConnection,$columnNameArray[1]);
-                    $columnNameArray[1] = str_replace('~',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore 
+                    $columnNameArray[1] = str_replace('mySqlGridSpace',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore 
                     $val = trim(mysqli_real_escape_string($mySqlGridConnection,$val));
                     if(strpos($val,'=') === 0){ // if preceded by =, >, or < sign we don't do a "LIKE".
                         $stripArray = explode('=',$val);
@@ -42,7 +42,7 @@
                 $columnNameArray = explode('mySqlGridDateFilterGe',$key);
                 if($columnNameArray[1]) {
                     $columnNameArray[1] = mysqli_real_escape_string($mySqlGridConnection,$columnNameArray[1]);
-                    $columnNameArray[1] = str_replace('~',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore
+                    $columnNameArray[1] = str_replace('mySqlGridSpace',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore
                     $val = mysqli_real_escape_string($mySqlGridConnection,$val);
                     $mySqlGridSql .= " AND `$columnNameArray[1]` >= '$val' ";
                 }
@@ -51,7 +51,7 @@
                 $columnNameArray = explode('mySqlGridDateFilterLe',$key);
                 if($columnNameArray[1]) {
                     $columnNameArray[1] = mysqli_real_escape_string($mySqlGridConnection,$columnNameArray[1]);
-                    $columnNameArray[1] = str_replace('~',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore
+                    $columnNameArray[1] = str_replace('mySqlGridSpace',' ',$columnNameArray[1]); // work around because parse_str sets blanks to underscore
                     $val = mysqli_real_escape_string($mySqlGridConnection,$val);
                     $mySqlGridSql .= " AND `$columnNameArray[1]` <= '$val' ";
                 }
@@ -77,14 +77,9 @@
         <?php
         }   
     }
-    if(!$mySqlGridParams['mySqlGridSort']) {
-        if(preg_match("/order by (\S+)/i", $baseSql, $match )) $mySqlGridParams['mySqlGridSort'] = $match[1];
-        if(preg_match("/\border by\W+(?:\w+\W+){1,6}?desc\b/i", $baseSql, $match )) $mySqlGridParams['mySqlGridDesc'] = 'desc';
-
-    }
     if($mySqlGridParams['mySqlGridSelect']) {
         $selectArray = array(); 
-        $selectColumn = str_replace('~',' ', mysqli_real_escape_string($mySqlGridConnection,$mySqlGridParams['mySqlGridSelect']));
+        $selectColumn = str_replace('mySqlGridSpace',' ', mysqli_real_escape_string($mySqlGridConnection,$mySqlGridParams['mySqlGridSelect']));
         $selectSql = "SELECT DISTINCT `$selectColumn` AS SelectVal FROM ( ". $mySqlGridSql ." ) AS fullSet2 WHERE `$selectColumn` IS NOT NULL ORDER BY `$selectColumn` ";
         $selectResults = $mySqlGridConnection->query($selectSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$selectSql");
         while($selectRow = $selectResults->fetch_array(MYSQLI_ASSOC)) { 
@@ -100,6 +95,7 @@
     } 
     $pages = ceil($totalRows/$lineCount);
     if($mySqlGridParams['mySqlGridSort'] && !$mySqlGridParams['mySqlGridReset']) $mySqlGridSql.=" ORDER BY `$mySqlGridParams[mySqlGridSort]` $mySqlGridParams[mySqlGridDesc] ";
+    elseif($optionsArray['defaultOrderBy']) $mySqlGridSql .= " $optionsArray[defaultOrderBy] ";
     if(!$mySqlGridParams['mySqlGridNoPages'] && !($optionsArray['noPaginate'] == true) ) $mySqlGridSql .= " LIMIT $position, $lineCount ";
     else {  
     ?>
@@ -176,7 +172,7 @@
         echo "<tr id='mySqlGridSearchRow'>";
         if(!$optionsArray['noSearch'] == true) { 
             foreach($columns as $column => $type) { // build search row
-                $column = str_replace(' ','~',htmlspecialchars($column)); // have to convert blanks to '~' because parse_str changes blanks to underscores.  We convert back in code above.
+                $column = str_replace(' ','mySqlGridSpace',htmlspecialchars($column)); // have to convert blanks to 'mySqlGridSpace' because parse_str changes blanks to underscores.  We convert back in code above.
                 if($mySqlGridParams['mySqlGridSelect'] == $column) { // User requested a drop down list
                     $selectId = "mySqlGridFilter{$column}";
                     echo "<td colspan='2' onChange='mySqlGridUpdate();'><select name='mySqlGridFilter{$column}' id='mySqlGridFilter{$column}'><option value=''></option>";  
@@ -197,7 +193,7 @@
                     if($type == 12 || $type == 10) {
                         echo "<td class='mySqlGridSelectCol' onClick=\"mySqlGridDate$column();\"><img src='{$mySqlGridPath}images/calendar3.gif'></td>";
                     }
-                    elseif(!in_array($column,$optionsArray['hideSelects']) && !($optionsArray['noSelects'] == true))
+                    elseif(!in_array(str_replace('mySqlGridSpace',' ',$column),$optionsArray['hideSelects']) && !($optionsArray['noSelects'] == true))
                         echo "<td class='mySqlGridSelectCol' onClick='document.getElementById(\"mySqlGridSelect\").value=\"$column\";  mySqlGridUpdate();'><img src='{$mySqlGridPath}images/icon_dropdown2.gif'></td>";
                     else echo "<td></td>";
                 }
@@ -207,7 +203,7 @@
         while($row = $results->fetch_array(MYSQLI_ASSOC)) {
             echo "<tr>";
             foreach($columns as $column => $type) {
-                if($row[$column]) $row[$column] = htmlspecialchars($row[$column]); 
+                if($row[$column] && !stripos($row[$column], ' href') && !stripos($row[$column], 'img')) $row[$column] = htmlspecialchars($row[$column]); // allow html for anchor or img.
                 echo "<td class='mySqlGridDataCell' colspan='2'>$row[$column]</td>";   
             }
             if($optionsArray['gridControlHtml']) {
@@ -223,16 +219,18 @@
     <input type='submit' class='mySqlGridSubmit'>";
     foreach($columns as $column => $type) {
         if(($type == 12 || $type == 10) && !$optionsArray['noSearch']) {
+            $column = str_replace(' ','mySqlGridSpace',htmlspecialchars($column));  
             if(!$mySqlGridParams['mySqlGridReset']) {
                 $postVal = "mySqlGridDateFilterGe$column";
                 $geVal = htmlspecialchars($mySqlGridParams[$postVal]);
                 $postVal = "mySqlGridDateFilterLe$column";
                 $leVal = htmlspecialchars($mySqlGridParams[$postVal]);
-            }
-            echo "<div id='mySqlGridDate$column' title='$column Filter'>
+            } 
+            $visualName = str_replace('mySqlGridSpace',' ',$column);
+            echo "<div id='mySqlGridDate$column' title='$visualName Filter'>
             <input type='text' style='width: 0; height: 0; top: -100px; position: absolute;'/>
-            <p>$column From: <input type='text' name='mySqlGridDateFilterGe{$column}' id='mySqlGridDateFilterGe{$column}' value=\"$geVal\" ></p>
-            <p>$column To: <input type='text' name='mySqlGridDateFilterLe{$column}' id='mySqlGridDateFilterLe{$column}' value=\"$leVal\" ></p>
+            <p>$visualName From: <input type='text' name='mySqlGridDateFilterGe{$column}' id='mySqlGridDateFilterGe{$column}' value=\"$geVal\" ></p>
+            <p>$visualName To: <input type='text' name='mySqlGridDateFilterLe{$column}' id='mySqlGridDateFilterLe{$column}' value=\"$leVal\" ></p>
             <p>
             <input type='button' name='mySqlGridDateFilterButton' value='Apply' onclick='document.getElementById(\"mySqlGridFilter{$column}\").value=\"\"; mySqlGridUpdate();'>
             <input type='button' name='mySqlGridDateFilterButton' value='Clear' onclick='document.getElementById(\"mySqlGridDateFilterGe{$column}\").value=\"\"; document.getElementById(\"mySqlGridDateFilterLe{$column}\").value=\"\"; document.getElementById(\"mySqlGridFilter{$column}\").value=\"\"; mySqlGridUpdate();'></p>
@@ -243,7 +241,9 @@
                 $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog( "open" );
             }  
             $(function() {
-                $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog({
+                $( "#<?php echo "mySqlGridDate$column"; ?>" ).dialog({ 
+                    // position:{my:"top",at:"top+300", of:"body"},
+                    // position:{my:"right top",at:"right-100 top+100", of:"body"},
                     autoOpen: false,
                     minWidth: 600,
                     appendTo: '#mySqlGridForm'
