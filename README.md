@@ -3,9 +3,9 @@ A powerful yet easy to use Ajax datagrid for PHP/MySQL
 
 Demo: http://mysqlgrid.com/demo/demo1.php
 
-MySqlGrid lets you easily create a sortable, searchable, and paginated data grid from ANY valid MySQL SELECT statement.  Each column will automatically have an input field where the user can enter a substring to filter the results.  If the user selects the drop-down icon for a column MySqlGrid dynamically builds an html select element from the unique values for that column.
+MySqlGrid lets you easily create a sortable, searchable, and paginated data grid from ANY valid MySQL SELECT statement.  Each column will automatically have an input field in which a substring can be entered to filter the results.  If the user selects the drop-down icon for a column MySqlGrid dynamically builds an html select element from the unique values for that column.
 
-I created mySqlGrid with a focus on security and simplicity.  The learning curve is very minimal, provided you understand your database and SQL.  Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful data grid that will allow your users to quickly find the information they need.
+I created mySqlGrid with a focus on security, reliability, and simplicity.  The learning curve is very minimal, provided you understand your database and SQL.  Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful data grid that will allow your users to quickly find the information they need.
 
 To use mySqlGrid follow these steps:<br>
 1. Copy directory "mysqlgrid" to a directory on your web server.<br> 
@@ -22,9 +22,20 @@ For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/ma
 <tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required to generate a grid.</td></tr>
 <tr><td><b>includePath</b></td><td>String</td><td>This is the path to the "mysqlgrid" directory. If you do not specify an <b>includePath</b> mySqlGrid assumes the same directory as your php script.  <b>includePath</b> needs to have a "/" as the last character.  It is recommended to use relative paths.  Example: "../somedirectory/anotherdirectory/"</td></tr>
 <tr><td><b>lineCount</b></td><td>Integer</td><td>The number of rows in each paginated grid.  If <b>lineCount</b> is not specified mySqlGrid will display 25 rows per page.</td></tr>
+
+<tr><td><b>database</b></td><td>String</td><td>In installations with multiple databases you can specify the database here.  Then, in dbconnect.php you would add something like: if($optionsArray['database']) mysqli_select_db($mySqlGridConnection, $optionsArray['database']);</td></tr>
+
 <tr><td><b>hideColumns</b></td><td>Array</td><td>Specifies columns in the mySQL result set that will not be displayed on the grid.  This is handy when you want to get a table's primary key value that means nothing to the user, but will be used to perform an action on a selected row. (See options <b>gridControlHtml</b> and <b>gridControlKey</b>)</td></tr>
 <tr><td><b>hideSelects</b></td><td>Array</td><td>Specifies columns that will not be given dynamic drop-down select capability.  They will still be searchable by substring.</td></tr>
 <tr><td><b>noSelects</b></td><td>Boolean</td><td>When set to true this option will remove dynamic drop-down select capability from all columns.</td></tr>
+
+<tr><td><b>noReport</b></td><td>Boolean</td><td>Removes the "Report View" button. When the user selects "Report View" button they see a simplified view of the grid table without any controls.</td></tr>
+
+
+<tr><td><b>defaultOrderBy</b></td><td>String</td><td>You can include a default "ORDER BY" clause in your SQL, but for performance purposes it's better to specify this as a MySqlGrid option. Typically this might look something like: 'ORDER BY Last_Name DESC'</td></tr>
+
+
+
 <tr><td><b>noPaginate</b></td><td>Boolean</td><td>When set to true this option will remove pagination capability. Use with caution: activating <b>noPaginate</b> will cause all rows to be downloaded to the browser at once. If the SQL result set consists of many thousands of rows this might not be wanted.</td></tr>
 <tr><td><b>alwaysPaginate</b></td><td>Boolean</td><td>Removes the button: "No Pagination"</td></tr>
 <tr><td><b>gridControlKey</b></td><td>String</td><td>Used in conjuction with <b>gridControlHtml</b>. This will be the name of the column that represents the unique identifier of the returned result set. Typically this would be a Primary Key field that was included in the SELECT statement but was hidden from the user using <b>hideColumns</b>.</td></tr>
