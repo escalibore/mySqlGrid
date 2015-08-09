@@ -32,7 +32,7 @@ For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/ma
 <tr><td><b>noReport</b></td><td>Boolean</td><td>Removes the "Report View" button. When the user selects "Report View" button they see a simplified view of the grid table without any controls.</td></tr>
 
 
-<tr><td><b>defaultOrderBy</b></td><td>String</td><td>You can include a default "ORDER BY" clause in your SQL, but for performance purposes it's better to specify this as a MySqlGrid option. Typically this might look something like: <b>'ORDER BY Last_Name DESC'</b></td></tr>
+<tr><td><b>defaultOrderBy</b></td><td>String</td><td>You can include a default "ORDER BY" clause in your SQL, but for performance reasons it's better to specify this as a MySqlGrid option. Typically this might look something like: <b>'ORDER BY Last_Name DESC'</b></td></tr>
 
 
 <tr><td><b>noSearch</b></td><td>Boolean</td><td>Removes entire search row.</td></tr>
