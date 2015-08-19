@@ -268,6 +268,7 @@
     </div>";
 ?> 
 <script type="text/javascript">
+    $('#mySqlGridLoading').hide();
     $(document).ready(function() {
         var mySqlGridPageCnt = document.getElementById('mySqlGridPageCnt').value;
         if(mySqlGridPageCnt < 2 <?php if($optionsArray['noPaginate'] || $mySqlGridParams['mySqlGridNoPages']) echo ' || true '; ?>) $("#mySqlGridPagination").hide();

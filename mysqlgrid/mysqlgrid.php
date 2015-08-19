@@ -2,6 +2,7 @@
     if($mySqlGridOptions['includePath']) $mySqlGridPath = $mySqlGridOptions['includePath']; else $mySqlGridPath = 'mysqlgrid/';
     $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
     require $mySqlGridPath.'dbconnect.php';
+    echo "<div style='margin-left:30%' id='mySqlGridLoading'>Loading... <img class='mySqlGridSpinner' src='{$mySqlGridPath}images/725.GIF'></div>";
     $mySqlGridSql =  $mySqlGridOptions['sql'];
     $mySqlGridSql = str_replace(PHP_EOL, '', $mySqlGridSql); // get rid of eol characters
     $countSql = "SELECT COUNT(*) rowCount FROM ( ". $mySqlGridSql ." ) AS fullSet ";     
@@ -18,7 +19,6 @@
 <script>window.jQuery || document.write('<script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js">\x3C/script>')</script>
 <script src="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.js"></script>
 <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
-
 <script type="text/javascript"> 
     function mySqlGridUpdate(){
         $('#mySqlGridSpinner').show();
@@ -59,7 +59,7 @@
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].style.display = "none";
         }
-        
+
         var inputs = document.getElementsByTagName("IMG");
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].style.display = "none";
