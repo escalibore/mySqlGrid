@@ -85,15 +85,7 @@
         while($selectRow = $selectResults->fetch_array(MYSQLI_ASSOC)) { 
             $selectArray[] = htmlspecialchars($selectRow['SelectVal']);
         }
-    } 
-    if($_POST['mySqlGridRows']) $totalRows = $_POST['mySqlGridRows']; // We got the count on original page load 
-    else {
-        $countSql = "SELECT COUNT(*) rowCount FROM ( ". $mySqlGridSql ." ) AS fullSet2 "; // get row count    
-        $results = $mySqlGridConnection->query($countSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$countSql");
-        $get_total_rows = $results->fetch_array(MYSQLI_ASSOC);
-        $totalRows = $get_total_rows['rowCount'];
-    } 
-    $pages = ceil($totalRows/$lineCount);
+    }
     if($mySqlGridParams['mySqlGridSort'] && !$mySqlGridParams['mySqlGridReset']) $mySqlGridSql.=" ORDER BY `$mySqlGridParams[mySqlGridSort]` $mySqlGridParams[mySqlGridDesc] ";
     elseif($optionsArray['defaultOrderBy']) $mySqlGridSql .= " $optionsArray[defaultOrderBy] ";
     if(!$mySqlGridParams['mySqlGridNoPages'] && !($optionsArray['noPaginate'] == true) ) $mySqlGridSql .= " LIMIT $position, $lineCount ";
@@ -104,7 +96,12 @@
     </script>
     <?php   
     }
+    $mySqlGridSql = preg_replace("/SELECT/i","SELECT SQL_CALC_FOUND_ROWS ",$mySqlGridSql, 1);
     $results = $mySqlGridConnection->query($mySqlGridSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$mySqlGridSql");
+    $resultsRowCount = $mySqlGridConnection->query("SELECT FOUND_ROWS()") or die($mySqlGridConnection->error." line:".__LINE__." sql:'SELECT FOUND_ROWS()'");
+    $foundRowsArray = $resultsRowCount->fetch_row();
+    $totalRows = $foundRowsArray[0];
+    $pages = ceil($totalRows/$lineCount);
     $rowCount = $results->num_rows;
     $startRow = $position + 1;
     $offSet = $position + $rowCount;

@@ -3,15 +3,9 @@
     $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
     require $mySqlGridPath.'dbconnect.php';
     echo "<div style='margin-left:30%' id='mySqlGridLoading'>Loading... <img class='mySqlGridSpinner' src='{$mySqlGridPath}images/725.GIF'></div>";
-    $mySqlGridSql =  $mySqlGridOptions['sql'];
-    $mySqlGridSql = str_replace(PHP_EOL, '', $mySqlGridSql); // get rid of eol characters
-    $countSql = "SELECT COUNT(*) rowCount FROM ( ". $mySqlGridSql ." ) AS fullSet ";     
-    $results = $mySqlGridConnection->query($countSql) or die($mySqlGridConnection->error." line:".__LINE__." sql:$countSql");
-    $get_total_rows = $results->fetch_array(MYSQLI_ASSOC);
-    $pages = ceil($get_total_rows['rowCount']/$lineCount);
     $mySqlGridOptionsEncode = urlencode(serialize($mySqlGridOptions));                                                       
     $mySqlGridData = 'mySqlGridOptions='. $mySqlGridOptionsEncode;
-    $postString = "'mySqlGridData':'$mySqlGridData', 'mySqlGridRows':'$get_total_rows[rowCount]', 'mySqlGridSerial':'$mySqlGridOptionsEncode'";
+    $postString = "'mySqlGridData':'$mySqlGridData'";
 ?>
 <link rel="stylesheet" href="<?php echo "$mySqlGridPath"; ?>theme.css">
 <link rel="stylesheet" href="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.css">
@@ -38,9 +32,10 @@
     }
     $(document).ready(function() {
         $("#mySqlGridPagination").css("display", "none"); // prevents pagination bar from appearing before table.
-        $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {<?php echo $postString; ?>});  //initial page number to load  
+        $("#mySqlGridTable").load('<?php echo $mySqlGridPath; ?>mysqlgridajax.php', {<?php echo $postString; ?>});  //initial page number to load
         $("#mySqlGridPagination").bootpag({
-            <?php echo "total: $pages,";?> // total number of pages
+            total: 1, // total number of pages
+            <?php //  echo "total: $pages,";?> // total number of pages
             page: 1, //initial page
             maxVisible: 10 //maximum visible links
         }).on("page", function(e, num){
