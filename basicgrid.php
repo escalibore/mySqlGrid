@@ -7,8 +7,6 @@
                 LEFT JOIN Album al ON al.AlbumId = t.AlbumId
                 LEFT JOIN Artist a ON a.ArtistId = al.ArtistId
                 LEFT JOIN Genre g ON g.GenreId = t.GenreId
-                ORDER BY Track DESC",
-                //'includePath' => 'mysqlgrid/',
                 //'lineCount' => 20,
                 //'hideColumns' => array('TrackId'),
                 //'hideSelects' => array('Composer'),
