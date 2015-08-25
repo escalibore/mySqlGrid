@@ -7,7 +7,7 @@ MySqlGrid lets you quickly create sortable, searchable, and paginated data grids
 
 * Automatically creates input fields in which a substring can be entered to filter the results. 
 * Automatically creates dynamically generated drop-down selects.
-* Detects date fields and automatically provides icon activated pop-up dialogs so users can enter date filters.
+* Detects date fields and automatically provides pop-up date picker dialogs so users can enter date filters.
 * Optionally add controls to edit, view, or delete rows.
 
 MySqlGrid was created with a focus on security, reliability, and simplicity. The learning curve is very minimal. Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful datagrid that will allow your users to quickly find the information they need.
