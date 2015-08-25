@@ -6,7 +6,7 @@
                 SELECT TrackId, t.Name Track, al.Title Album, a.Name Artist, Composer, g.Name Genre FROM Track t
                 LEFT JOIN Album al ON al.AlbumId = t.AlbumId
                 LEFT JOIN Artist a ON a.ArtistId = al.ArtistId
-                LEFT JOIN Genre g ON g.GenreId = t.GenreId
+                LEFT JOIN Genre g ON g.GenreId = t.GenreId",
                 //'lineCount' => 20,
                 //'hideColumns' => array('TrackId'),
                 //'hideSelects' => array('Composer'),
