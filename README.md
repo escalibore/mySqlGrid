@@ -1,11 +1,16 @@
 # mySqlGrid
-A powerful yet easy to use Ajax datagrid for PHP/MySQL
+A powerful and easy to use Ajax data grid for PHP/MySQL
 
 Demo: http://mysqlgrid.com/demo/demo1.php
 
-MySqlGrid lets you easily create a sortable, searchable, and paginated data grid from ANY valid MySQL SELECT statement.  Each column will automatically have an input field in which a substring can be entered to filter the results.  If the user selects the drop-down icon for a column MySqlGrid dynamically builds an html select element from the unique values for that column.
+MySqlGrid lets you quickly create sortable, searchable, and paginated data grids from *ANY* MySQL SELECT statement including multi-table joins.  
 
-I created mySqlGrid with a focus on security, reliability, and simplicity.  The learning curve is very minimal, provided you understand your database and SQL.  Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful data grid that will allow your users to quickly find the information they need.
+* Automatically creates input fields in which a substring can be entered to filter the results. 
+* Automatically creates dynamically generated drop-down selects.
+* Detects date fields and automatically provides icon activated pop-up dialogs so users can enter date filters.
+* Optionally add controls to edit, view, or delete rows.
+
+MySqlGrid was created with a focus on security, reliability, and simplicity. The learning curve is very minimal. Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful datagrid that will allow your users to quickly find the information they need.
 
 To use mySqlGrid follow these steps:<br>
 1. Copy directory "mysqlgrid" to a directory on your web server.<br> 
@@ -16,7 +21,7 @@ To use mySqlGrid follow these steps:<br>
 
 For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/master/basicgrid.php">basicgrid.php</a>.
 
-<h4>MySqlGrid Options are specified in the header of your html, in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
+<h4>MySqlGrid works "out of the box" but provides many configuration options. Options are specified in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
 <table>
 <tr><th>Option Name</th><th>Type</th><th>Description</th></tr>
 <tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required to generate a grid.</td></tr>
