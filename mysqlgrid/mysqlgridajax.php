@@ -2,9 +2,9 @@
     if($_POST['page']) $page_number = $_POST['page']; else $page_number = 1; 
     $mySqlGridParams = array();
     parse_str($_POST['mySqlGridData'],$mySqlGridParams);
-    $optionsArray = unserialize(urldecode($mySqlGridParams['mySqlGridOptions']));
+    $optionsArray = unserialize(rawurldecode($mySqlGridParams['mySqlGridOptions']));
     if(!$mySqlGridConnection) require 'dbconnect.php';
-    $repack = urlencode(serialize($optionsArray));
+    $repack = rawurlencode(serialize($optionsArray));
     $lineCount = $optionsArray['lineCount'] ? $optionsArray['lineCount'] : 25;
     if($optionsArray['includePath']) $mySqlGridPath = $optionsArray['includePath']; else $mySqlGridPath = 'mysqlgrid/';
     $baseSql = str_replace(PHP_EOL, '', $optionsArray['sql']);

@@ -3,7 +3,7 @@
     $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
     require $mySqlGridPath.'dbconnect.php';
     echo "<div style='margin-left:30%' id='mySqlGridLoading'>Loading... <img class='mySqlGridSpinner' src='{$mySqlGridPath}images/725.GIF'></div>";
-    $mySqlGridOptionsEncode = urlencode(serialize($mySqlGridOptions));                                                       
+    $mySqlGridOptionsEncode = rawurlencode(serialize($mySqlGridOptions));                                                       
     $mySqlGridData = 'mySqlGridOptions='. $mySqlGridOptionsEncode;
     $postString = "'mySqlGridData':'$mySqlGridData'";
 ?>
