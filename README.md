@@ -12,16 +12,16 @@ MySqlGrid lets you quickly create sortable, searchable, and paginated data grids
 
 MySqlGrid was created with a focus on security, reliability, and simplicity. The learning curve is very minimal. Once you have a valid SQL query, you are minutes away from providing a flexible and beautiful datagrid that will allow your users to quickly find the information they need.
 
-To use mySqlGrid follow these steps:<br>
-1. Copy directory "mysqlgrid" to a directory on your web server.<br> 
+To use mySqlGrid follow these steps:<br><br>
+1. Install via Composer/Packagist. https://packagist.org/packages/mysqlgrid/mysqlgrid<br> 
 2. Specify your mysqli database connection in <a href="https://github.com/escalibore/mySqlGrid/blob/master/mysqlgrid/dbconnect.php">dbconnect.php</a><br>
-3. Include the file "mysqlgrid.php" in your PHP script.<br> 
-4. Specify your SQL Select statement (and any other optional parameters) in the "$mySqlGridOptions" array.  
+3. In your script add "<b>require __DIR__ . '/vendor/autoload.php';</b>" per Composer standards.<br> 
+4. Instantiate class <b>Mysqlgridmain</b>, passing in parameters for your SQL Select statement (and any other optional parameters).<br>
 5. In the body of your html you will need to create two div elements - one for the datagrid, and one for the pagination area.  These two divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.<br>  
 
 For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/master/basicgrid.php">basicgrid.php</a>.
 
-<h4>MySqlGrid works "out of the box" but provides many configuration options. Options are specified in a PHP array called "$mySqlGridOptions".  The options are as follows:</h4>
+<h4>MySqlGrid works "out of the box" but provides many configuration options. Options are passed as an array into the Mysqlgridmain object.  The options are as follows:</h4>
 <table>
 <tr><th>Option Name</th><th>Type</th><th>Description</th></tr>
 <tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required to generate a grid.</td></tr>
