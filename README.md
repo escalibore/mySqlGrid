@@ -62,13 +62,7 @@ For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/ma
 </td></tr>
 </table>
 <h4>Other Notes:</h4>
-MySqlGrid checks to see if jQuery is present, and if not, automatically loads it from a local copy stored in directory "mysqlgrid". If you otherwise need to load jQuery in your script it is recommended to add it in the head section above the $mySqlOptions array.
+MySqlGrid checks to see if jQuery is present, and if not, automatically loads it from a local copy. If you otherwise need to load jQuery in your script it is recommended to add it in the head section prior to instantiating the Mysqlgridmain object.
+
 <h4>Acknowledgments</h4>
 A huge thank you to Czarek Tomczak for <a href="https://code.google.com/p/expandselect/">ExpandSelect.js</a> and to botmonster for <a href="http://botmonster.com/jquery-bootpag/#.VZqNtvlViko">bootpag</a>.  You guys are JavaScript geniuses!
-
-
-
-
-
-
-
