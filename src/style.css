@@ -24,8 +24,9 @@ a.tooltip span
 
 .mySqlGridSpinner {vertical-align:middle;}
 .mySqlGridWrapper {display:inline-block;}
-.mySqlGridTop {height:25px; text-align:left;}
+.mySqlGridTop {height:22px; text-align:left; font-size:0.85em;}
 .mySqlGridbuttonArea {display:inline-block; float:right;}
+.mySqlGridbuttonArea button {font-size:0.8em;}
 .mySqlGridHeader {cursor:pointer; /*white-space:nowrap;*/ }
 .mySqlGridSearchCol {white-space:nowrap;}
 .mySqlGridSearchInput {width:100%;}
@@ -67,7 +68,7 @@ a.tooltip span
     color: white;
 }
 
-.mySqlGridTable input[type="button"] { font-size: 0.8em; }
+.mySqlGridTable input[type="button"] { font-size: 0.85em; }
 
 .mySqlGridTable tbody tr:hover td, .mySqlGridTable tbody tr:hover  {
     background-color:#DCF7EC;  
