@@ -1,7 +1,7 @@
 {
-  "name": "tommytest/tommytest",
+  "name": "mysqlgrid/mysqlgrid",
   "type": "library",
-  "description": "Framework agnostic data grid",
+  "description": "Framework agnostic datagrid - instantly convert SQL into a fully featured datagrid",
   "keywords": ["datagrid","data grid"],
   "homepage": "https://github.com/escalibore/mySqlGrid",
   "license": "MIT",
