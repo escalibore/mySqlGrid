@@ -1,7 +1,7 @@
 {
   "name": "mysqlgrid/mysqlgrid",
   "type": "library",
-  "description": "Framework agnostic datagrid - instantly convert SQL into a fully featured datagrid",
+  "description": "Framework agnostic datagrid - Instantly convert any SQL SELECT statement into a fully featured datagrid",
   "keywords": ["datagrid","data grid"],
   "homepage": "https://github.com/escalibore/mySqlGrid",
   "license": "MIT",
