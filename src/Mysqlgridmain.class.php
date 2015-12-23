@@ -3,7 +3,7 @@ namespace mysqlgridspace;
 
 class Mysqlgridmain
 {
-    function __construct($mySqlGridOptions)
+    public function __construct($mySqlGridOptions)
     {
         if (isset($mySqlGridOptions['includePath'])) $mySqlGridPath = $mySqlGridOptions['includePath']; else $mySqlGridPath = 'vendor/mysqlgrid/mysqlgrid/src/';
         $lineCount = $mySqlGridOptions['lineCount'] ? $mySqlGridOptions['lineCount'] : 25;
