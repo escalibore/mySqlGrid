@@ -9,7 +9,7 @@ if (empty($mySqlGridConnection)) require 'dbconnect.php';
 $repack = rawurlencode(base64_encode(serialize($optionsArray)));
 $lineCount = $optionsArray['lineCount'] ? $optionsArray['lineCount'] : 25;
 if (!empty($optionsArray['includePath'])) $mySqlGridPath = $optionsArray['includePath']; else $mySqlGridPath = 'vendor/mysqlgrid/mysqlgrid/src/';
-$baseSql = str_replace(PHP_EOL, '', $optionsArray['sql']);
+$baseSql = str_replace(PHP_EOL, ' ', $optionsArray['sql']);
 $position = (($page_number - 1) * $lineCount);
 $mySqlGridSql = "SELECT * FROM ( " . $baseSql . " ) AS fullSet ";
 if (empty($mySqlGridParams["mySqlGridReset$gridId"])) { // Ignore filters if user selected "Reset"
