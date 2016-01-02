@@ -25,7 +25,12 @@ For a basic example see <a href="https://github.com/escalibore/mySqlGrid/blob/ma
 <table>
 <tr><th>Option Name</th><th>Type</th><th>Description</th></tr>
 <tr><td><b>sql</b></td><td>String</td><td>A standard mySQL SELECT statement.  Any statement that returns rows from your mySQL database will be transformed into a grid.  <b>sql</b> is actually the only option that is required to generate a grid.</td></tr>
-<tr><td><b>includePath</b></td><td>String</td><td>This is the path to the "mysqlgrid" directory. If you do not specify an <b>includePath</b> mySqlGrid assumes the same directory as your php script.  <b>includePath</b> needs to have a "/" as the last character.  It is recommended to use relative paths.  Example: "../somedirectory/anotherdirectory/"</td></tr>
+<tr><td><b>includePath</b></td><td>String</td><td>This is the path to the mysqlgrid "src" directory.  This is not needed if you do a standard installation via Composer, in which case mySqlGrid assumes the default Composer installation directory (vendor/mysqlgrid/mysqlgrid/src/).  <b>includePath</b> needs to have a "/" as the last character.</td></tr>
+
+<tr><td><b>gridId</b></td><td>String</td><td>This is needed if you want to have more than one grid on your page.  If this paramater and its sister parameter "paginationId" are not set, MySqlGrid assumes the divs in your page will be "mySqlGridTable" and "mySqlGridPagination" respectively. For example:<a href="https://github.com/escalibore/mySqlGrid/blob/master/basicgrid.php">basicgrid.php</a>. However, to include multiple grids on one page, each grid needs to have uniquely identified divs for both the grid itself and for the pagination area.  In such a case you will need to specify paramaters <b>gridId</b> and <b>paginationId</b>.  Here is an example: <a href="https://github.com/escalibore/mySqlGrid/blob/master/multigridSample.php">multigridSample.php</a></td></tr>
+
+<tr><td><b>paginationId</b></td><td>String</td><td>See <b>gridId</b> above.</td></tr>
+
 <tr><td><b>lineCount</b></td><td>Integer</td><td>The number of rows in each paginated grid.  If <b>lineCount</b> is not specified mySqlGrid will display 25 rows per page.</td></tr>
 
 <tr><td><b>database</b></td><td>String</td><td>In installations with multiple databases you can specify the database here.  Then, in dbconnect.php you would add something like: <b>if($optionsArray['database']) mysqli_select_db($mySqlGridConnection, $optionsArray['database']);</b></td></tr>
