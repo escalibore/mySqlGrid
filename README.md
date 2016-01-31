@@ -15,7 +15,7 @@ MySqlGrid was created with a focus on security, reliability, and simplicity. The
 To use mySqlGrid follow these steps:<br><br>
 1. Install via Composer/Packagist. https://packagist.org/packages/mysqlgrid/mysqlgrid<br> 
 2. Specify your mysqli database connection in <a href="https://github.com/escalibore/mySqlGrid/blob/master/src/dbconnect.php">dbconnect.php</a><br>
-3. In your script add "<b>require __DIR__ . '/vendor/autoload.php';</b>" per Composer standards.<br> 
+3. In your script add "<b>require &#95;&#95;DIR&#95;&#95; . '/vendor/autoload.php';</b>" per Composer standards.<br> 
 4. Instantiate class <b>Mysqlgridmain</b>, passing in parameters for your SQL Select statement (and any other optional parameters).<br>
 5. In the body of your html you will need to create two div elements - one for the datagrid, and one for the pagination area.  These two divs must be given ids of "mySqlGridTable" and "mySqlGridPagination", respectively.<br>  
 
