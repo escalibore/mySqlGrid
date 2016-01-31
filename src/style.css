@@ -71,7 +71,7 @@ a.tooltip span
 .mySqlGridTable input[type="button"] { font-size: 0.85em; }
 
 .mySqlGridTable tbody tr:hover td, .mySqlGridTable tbody tr:hover  {
-    background-color:#D1FFD1;
+    background-color:#E0FCE2;
 }
 .mySqlGridTable tbody tr:nth-child(odd) { background-color:#E0EDF9 }
 .mySqlGridTable tbody tr:nth-child(even) { background-color: #F9F9F9 }
