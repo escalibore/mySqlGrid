@@ -3,14 +3,14 @@ require __DIR__ . '/vendor/autoload.php';
 
 $mysqlgrid1 = new mysqlgridspace\Mysqlgridmain([
     'sql' => "select * from Mytable1",
-    'gridId' => 'grid1';
-    'paginationId' => 'pagination1';
+    'gridId' => 'grid1',
+    'paginationId' => 'pagination1'
 ]);
 
 $mysqlgrid2 = new mysqlgridspace\Mysqlgridmain([
     'sql' => "select * from Mytable2",
-    'gridId' => 'grid2';
-    'paginationId' => 'pagination2';
+    'gridId' => 'grid2',
+    'paginationId' => 'pagination2'
 ]);
 ?>
 
