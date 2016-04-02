@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="<?php echo "$mySqlGridPath"; ?>style.css"/>
 <script>window.jQuery || document.write('<script src="<?php echo "$mySqlGridPath"; ?>jquery-2.1.3.min.js">\x3C/script>')</script>
-<script src="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.js"></script>
+<script>window.jQuery.ui || document.write('<script src="<?php echo "$mySqlGridPath"; ?>jquery-ui.min.js">\x3C/script>')</script>
 <script src="<?php echo "$mySqlGridPath"; ?>jquery.bootpag.min.js"></script>
 
 <script type="text/javascript">
